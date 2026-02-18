@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import BlurText from './BlurText'
 
 export function WelcomeIntro() {
     const [isVisible, setIsVisible] = useState(true)
@@ -30,25 +31,22 @@ export function WelcomeIntro() {
                     className="fixed inset-0 z-[9999] bg-primary flex flex-col items-center justify-center p-6"
                 >
                     <div className="relative overflow-hidden mb-4">
-                        <motion.h1
-                            initial={{ y: '100%' }}
-                            animate={{ y: 0 }}
-                            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                        <BlurText
+                            text="MR Media Works"
+                            delay={100}
+                            animateBy="letters"
+                            direction="top"
                             className="text-white text-xl sm:text-3xl font-black tracking-[0.8em] uppercase text-center pl-[0.8em]"
-                        >
-                            <span className="text-accent">MR Media Works</span>
-                        </motion.h1>
+                        />
                     </div>
 
-                    <motion.p
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.4 }}
+                    <BlurText
+                        text="Welcome to our creative space! We turn your ideas into powerful visuals that speak louder than words."
+                        delay={50}
+                        animateBy="words"
+                        direction="bottom"
                         className="text-white/60 text-sm sm:text-base font-medium max-w-sm text-center mb-4 leading-relaxed tracking-wide"
-                    >
-                        Welcome to our creative space! <br />
-                        We turn your ideas into powerful visuals that speak louder than words.
-                    </motion.p>
+                    />
 
                     <div className="w-full max-w-[200px] h-px bg-white/10 relative mt-8">
                         <motion.div
