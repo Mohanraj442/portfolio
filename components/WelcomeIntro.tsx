@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import BlurText from './BlurText'
+import { TextType } from './index'
 
 export function WelcomeIntro() {
     const [isVisible, setIsVisible] = useState(true)
@@ -31,24 +31,23 @@ export function WelcomeIntro() {
                     className="fixed inset-0 z-[9999] bg-primary flex flex-col items-center justify-center p-6"
                 >
                     <div className="relative overflow-hidden mb-4">
-                        <BlurText
+                        <TextType
                             text="MR Media Works"
-                            delay={100}
-                            animateBy="letters"
-                            direction="top"
-                            textAlign="center"
-                            letterSpacing="0.8em"
-                            className="text-white text-xl sm:text-3xl font-black uppercase text-center pl-[0.5em]"
+                            typingSpeed={100}
+                            loop={false}
+                            showCursor={true}
+                            cursorCharacter="_"
+                            className="text-white text-xl sm:text-3xl font-black uppercase text-center tracking-[0.4em]"
                         />
                     </div>
 
-                    <BlurText
+                    <TextType
                         text="Welcome to our creative space! We turn your ideas into powerful visuals that speak louder than words."
-                        delay={50}
-                        animateBy="words"
-                        direction="bottom"
-                        textAlign="center"
-                        className="text-white/60 text-sm sm:text-base font-medium max-w-sm text-center mb-4 leading-relaxed tracking-wide"
+                        typingSpeed={40}
+                        loop={false}
+                        showCursor={true}
+                        cursorCharacter="_"
+                        className="text-white/60 text-sm sm:text-base font-medium max-w-sm text-center mb-4 leading-relaxed tracking-wide h-12"
                     />
 
                     <div className="w-full max-w-[200px] h-px bg-white/10 relative mt-8">

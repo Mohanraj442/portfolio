@@ -19,7 +19,7 @@ interface TextTypeProps {
     cursorClassName?: string;
     cursorBlinkDuration?: number;
     textColors?: string[];
-    variableSpeed?: { min: number, max: number };
+    variableSpeed?: { min: number; max: number };
     onSentenceComplete?: (text: string, index: number) => void;
     startOnVisible?: boolean;
     reverseMode?: boolean;
@@ -104,6 +104,8 @@ const TextType = ({
 
         let timeout: NodeJS.Timeout;
         const currentText = textArray[currentTextIndex];
+        if (!currentText) return;
+
         const processedText = reverseMode ? currentText.split('').reverse().join('') : currentText;
 
         const executeTypingAnimation = () => {
@@ -170,7 +172,7 @@ const TextType = ({
     ]);
 
     const shouldHideCursor =
-        hideCursorWhileTyping && (currentCharIndex < textArray[currentTextIndex].length || isDeleting);
+        hideCursorWhileTyping && (currentCharIndex < (textArray[currentTextIndex]?.length || 0) || isDeleting);
 
     return createElement(
         Component,
@@ -179,18 +181,23 @@ const TextType = ({
             className: `text-type ${className}`,
             ...props
         },
-        [
-            createElement('span', {
-                key: 'content',
-                className: "text-type__content",
+        createElement(
+            'span',
+            {
+                className: 'text-type__content',
                 style: { color: getCurrentTextColor() || 'inherit' }
-            }, displayedText),
-            showCursor && createElement('span', {
-                key: 'cursor',
+            },
+            displayedText
+        ),
+        showCursor &&
+        createElement(
+            'span',
+            {
                 ref: cursorRef,
                 className: `text-type__cursor ${cursorClassName} ${shouldHideCursor ? 'text-type__cursor--hidden' : ''}`
-            }, cursorCharacter)
-        ]
+            },
+            cursorCharacter
+        )
     );
 };
 
