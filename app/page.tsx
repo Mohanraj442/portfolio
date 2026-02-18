@@ -14,7 +14,8 @@ import {
   CTAButtons,
   WelcomeIntro,
   BlurText,
-  TextType
+  TextType,
+  GlareHover
 } from '@/components'
 import { siteConfig } from '@/lib/siteConfig'
 import { useRef, useEffect } from 'react'
@@ -197,25 +198,36 @@ export default function HomePage() {
               <div className="absolute -inset-4 bg-accent/5 rounded-[2rem] -rotate-3 transition-transform group-hover:rotate-0 duration-700" />
               <div className="absolute -inset-4 border border-accent/10 rounded-[2rem] rotate-3 transition-transform group-hover:rotate-0 duration-700" />
 
-              <div className="relative h-full w-full rounded-2xl overflow-hidden shadow-2xl shadow-black/40 border border-white/10 bg-black">
-                <Image
-                  src="/mohanraj.png"
-                  alt="Mohan Raj - Professional Video Editor"
-                  fill
-                  className="object-cover object-[center_15%] scale-[1.0] group-hover:scale-[1.05] transition-all duration-700"
-                  priority
-                />
+              <GlareHover
+                glareColor="#ffffff"
+                glareOpacity={0.15}
+                glareAngle={-30}
+                glareSize={200}
+                transitionDuration={1000}
+                borderRadius="2rem"
+                borderColor="rgba(255,255,255,0.1)"
+                className="relative h-full w-full shadow-2xl shadow-black/40 bg-black"
+              >
+                <div className="relative h-full w-full overflow-hidden">
+                  <Image
+                    src="/mohanraj.png"
+                    alt="Mohan Raj - Professional Video Editor"
+                    fill
+                    className="object-cover object-[center_15%] scale-[1.0] group-hover:scale-[1.05] transition-all duration-700"
+                    priority
+                  />
 
-                {/* Floating Stats or Badge */}
-                <motion.div
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute bottom-6 right-6 p-4 bg-white/90 backdrop-blur-md rounded-xl shadow-lg border border-white/20"
-                >
-                  <p className="text-sm font-bold uppercase tracking-widest text-accent mb-1">Experience</p>
-                  <p className="text-2xl font-black text-primary leading-none">2+ YEARS</p>
-                </motion.div>
-              </div>
+                  {/* Floating Stats or Badge */}
+                  <motion.div
+                    animate={{ y: [0, -10, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute bottom-6 right-6 p-4 bg-white/90 backdrop-blur-md rounded-xl shadow-lg border border-white/20 z-30"
+                  >
+                    <p className="text-sm font-bold uppercase tracking-widest text-accent mb-1">Experience</p>
+                    <p className="text-2xl font-black text-primary leading-none">2+ YEARS</p>
+                  </motion.div>
+                </div>
+              </GlareHover>
             </motion.div>
           </div>
         </div>
