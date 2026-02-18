@@ -13,7 +13,8 @@ import {
   VideoPreview,
   CTAButtons,
   WelcomeIntro,
-  BlurText
+  BlurText,
+  TextType
 } from '@/components'
 import { siteConfig } from '@/lib/siteConfig'
 import { useRef, useEffect } from 'react'
@@ -135,6 +136,18 @@ export default function HomePage() {
                   textAlign="left"
                   delay={80}
                   className="text-6xl sm:text-7xl lg:text-9xl font-black tracking-tighter text-primary leading-[0.8] cursor-default"
+                />
+              </div>
+
+              {/* Dynamic Typing Title */}
+              <div className="mb-6 h-12 flex items-center">
+                <TextType
+                  text={["Cinematic Video Editor", "VFX Professional", "Color Grading Expert", "Visual Storyteller"]}
+                  typingSpeed={80}
+                  pauseDuration={2000}
+                  showCursor
+                  cursorCharacter="_"
+                  className="text-2xl sm:text-3xl font-bold text-accent tracking-tight"
                 />
               </div>
 
