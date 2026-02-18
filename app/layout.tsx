@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import { siteConfig } from '@/lib/siteConfig'
 import { Outfit } from 'next/font/google'
 
-const font = Outfit({ subsets: ['latin'] })
+const font = Outfit({ subsets: ['latin', 'latin-ext'] })
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),

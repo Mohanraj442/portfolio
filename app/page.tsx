@@ -335,7 +335,7 @@ export default function HomePage() {
       {/* Services & Packages Section */}
       <Section id="packages" title="Services & Packages">
         <div className="grid lg:grid-cols-3 gap-8">
-          {/* Tier 1: 500 - 1000 */}
+          {/* Tier 1: 500 - 1000 ₹*/}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -368,7 +368,7 @@ export default function HomePage() {
                   transition={{ duration: 0.6, delay: 0.4 }}
                   className="text-2xl font-bold text-accent mt-1"
                 >
-                  500 - 1000
+                  <span className="font-sans">₹</span>500 - <span className="font-sans">₹</span>1,000
                 </motion.div>
               </div>
               <p className="text-secondary text-sm mb-6 flex-1">
@@ -387,7 +387,7 @@ export default function HomePage() {
             </div>
           </motion.div>
 
-          {/* Tier 2: 1000 - 2000 */}
+          {/* Tier 2: 1000 - 2000 ₹*/}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -421,7 +421,7 @@ export default function HomePage() {
                   transition={{ duration: 0.6, delay: 0.4 }}
                   className="text-2xl font-bold text-accent mt-1"
                 >
-                  1000 - 2000
+                  <span className="font-sans">₹</span>1,000 - <span className="font-sans">₹</span>2,000
                 </motion.div>
               </div>
               <p className="text-secondary text-sm mb-6 flex-1">
@@ -440,7 +440,7 @@ export default function HomePage() {
             </div>
           </motion.div>
 
-          {/* Tier 3: 2000 - 5000 */}
+          {/* Tier 3: 2000 - 5000 ₹*/}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -473,7 +473,7 @@ export default function HomePage() {
                   transition={{ duration: 0.6, delay: 0.4 }}
                   className="text-2xl font-bold text-accent mt-1"
                 >
-                  2000 - 5000
+                  <span className="font-sans">₹</span>2,000 - <span className="font-sans">₹</span>5,000+
                 </motion.div>
               </div>
               <p className="text-secondary text-sm mb-6 flex-1">
