@@ -11,9 +11,6 @@ export const siteConfig = {
   tools: ['Adobe Photoshop', 'Adobe Premiere Pro', 'Adobe After Effects'],
   socials: {
     email: 'mailto:',
-    instagram: '#',
-    youtube: '#',
-    behance: '#',
-    github: 'https://github.com/Mohanraj442'
+    linkedin: 'https://www.linkedin.com/in/mohanraj-r-39763a2a1/'
   }
 }

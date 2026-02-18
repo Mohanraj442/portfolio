@@ -15,10 +15,7 @@ export function Footer() {
       >
         <p className="text-base text-secondary">&copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
         <div className="flex items-center gap-6 text-base">
-          <Link href={siteConfig.socials.github} className="text-secondary hover:text-accent font-medium transition-colors">GitHub</Link>
-          <Link href={siteConfig.socials.instagram} className="text-secondary hover:text-accent font-medium transition-colors">Instagram</Link>
-          <Link href={siteConfig.socials.youtube} className="text-secondary hover:text-accent font-medium transition-colors">YouTube</Link>
-          <Link href={siteConfig.socials.behance} className="text-secondary hover:text-accent font-medium transition-colors">Behance</Link>
+          <Link href={siteConfig.socials.linkedin} className="text-secondary hover:text-accent font-medium transition-colors">LinkedIn</Link>
         </div>
       </motion.div>
     </footer>
