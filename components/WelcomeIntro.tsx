@@ -18,7 +18,7 @@ export function WelcomeIntro() {
                 }
                 return prev + 1
             })
-        }, 20)
+        }, 50)
         return () => clearInterval(timer)
     }, [])
 
