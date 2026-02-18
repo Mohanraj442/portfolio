@@ -141,7 +141,7 @@ export default function HomePage() {
 
               {/* Subtitle / Description */}
               <div className="flex flex-wrap gap-x-[0.3em] gap-y-[0.1em] mb-10 overflow-hidden max-w-xl">
-                {"Senior Video Editor & Visual Architect. Crafting high-impact cinematic experiences for brands that demand excellence.".split(' ').map((word, i) => (
+                {"Video  Editor  &  Visual  Architect.  Crafting  high-impact  cinematic  experiences  for  brands  that  demand  excellence.".split(' ').map((word, i) => (
                   <motion.span
                     key={i}
                     initial={{ opacity: 0, y: 30, skewX: -10 }}
