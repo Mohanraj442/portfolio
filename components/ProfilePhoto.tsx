@@ -19,7 +19,7 @@ export function ProfilePhoto({ src = '/mohanraj.png' }: { src?: string }) {
           width={512}
           height={512}
           priority
-          className="object-cover object-[center_25%] scale-[1.0] hover:scale-[1.05] transition-transform duration-500 w-full h-full"
+          className="object-cover object-[center_15%] scale-[1.0] hover:scale-[1.05] transition-transform duration-500 w-full h-full"
         />
       </div>
     </motion.div>

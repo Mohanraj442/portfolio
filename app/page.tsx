@@ -202,7 +202,7 @@ export default function HomePage() {
                   src="/mohanraj.png"
                   alt="Mohan Raj - Professional Video Editor"
                   fill
-                  className="object-cover object-[center_25%] scale-[1.0] group-hover:scale-[1.05] transition-all duration-700"
+                  className="object-cover object-[center_15%] scale-[1.0] group-hover:scale-[1.05] transition-all duration-700"
                   priority
                 />
 
