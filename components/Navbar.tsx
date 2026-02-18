@@ -1,17 +1,29 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
-import { motion, useScroll, useMotionValueEvent } from 'framer-motion'
-import { useState } from 'react'
+import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion'
+import { useState, useEffect } from 'react'
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { scrollY } = useScroll()
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setScrolled(latest > 20)
   })
+
+  // Close menu on scroll or resize
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isMobileMenuOpen])
 
   const navItems = ['About', 'Skills', 'Packages', 'Benefits', 'Experience', 'Projects']
 
@@ -20,7 +32,7 @@ export function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${scrolled ? 'bg-white/70 backdrop-blur-xl shadow-lg shadow-black/5 py-4' : 'bg-transparent py-8'
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${scrolled || isMobileMenuOpen ? 'bg-white/70 backdrop-blur-xl shadow-lg shadow-black/5 py-4' : 'bg-transparent py-8'
         }`}
     >
       <div className="container flex items-center justify-between">
@@ -35,7 +47,7 @@ export function Navbar() {
           </svg>
         </Link>
 
-        {/* Navigation */}
+        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-10">
           {navItems.map((item, index) => (
             <motion.div
@@ -68,13 +80,74 @@ export function Navbar() {
           </motion.div>
         </nav>
 
-        {/* Mobile Menu Button (Placeholder for simplicity) */}
-        <button className="md:hidden p-2 text-foreground">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="md:hidden p-2 text-primary z-50 relative"
+          aria-label="Toggle Menu"
+        >
+          <div className="w-6 h-5 relative flex flex-col justify-between">
+            <motion.span
+              animate={isMobileMenuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
+              className="w-full h-0.5 bg-current rounded-full origin-left transition-all"
+            />
+            <motion.span
+              animate={isMobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
+              className="w-full h-0.5 bg-current rounded-full transition-all"
+            />
+            <motion.span
+              animate={isMobileMenuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
+              className="w-full h-0.5 bg-current rounded-full origin-left transition-all"
+            />
+          </div>
         </button>
       </div>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: '100vh' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 top-[72px] bg-white z-40 md:hidden overflow-hidden"
+          >
+            <nav className="container py-12 flex flex-col gap-8">
+              {navItems.map((item, index) => (
+                <motion.div
+                  key={item}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Link
+                    href={`#${item.toLowerCase()}`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="text-3xl font-black uppercase tracking-tighter text-primary hover:text-accent transition-colors"
+                  >
+                    {item}
+                  </Link>
+                </motion.div>
+              ))}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                className="mt-4"
+              >
+                <Link
+                  href="#contact"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="inline-block px-10 py-5 rounded-full bg-primary text-white font-black uppercase tracking-[0.2em] shadow-2xl shadow-primary/20"
+                >
+                  Start Project
+                </Link>
+              </motion.div>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   )
 }
