@@ -12,7 +12,8 @@ import {
   ContactForm,
   VideoPreview,
   CTAButtons,
-  WelcomeIntro
+  WelcomeIntro,
+  BlurText
 } from '@/components'
 import { siteConfig } from '@/lib/siteConfig'
 import { useRef, useEffect } from 'react'
@@ -126,44 +127,34 @@ export default function HomePage() {
               className="relative"
             >
 
-              {/* Title with Mask Reveal */}
               <div className="overflow-hidden mb-6">
-                <motion.h1
-                  initial={{ y: "100%" }}
-                  animate={{ y: 0 }}
-                  whileHover={{ scale: 1.02, filter: "brightness(1.1)" }}
-                  transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                  className="text-6xl sm:text-7xl lg:text-8xl font-black tracking-tighter text-primary leading-[0.9] cursor-default"
-                >
-                  MOHAN
-                </motion.h1>
+                <BlurText
+                  text="MOHAN"
+                  animateBy="letters"
+                  direction="top"
+                  textAlign="left"
+                  delay={80}
+                  className="text-6xl sm:text-7xl lg:text-9xl font-black tracking-tighter text-primary leading-[0.8] cursor-default"
+                />
               </div>
 
               {/* Subtitle / Description */}
-              <div className="flex flex-wrap gap-x-[0.3em] gap-y-[0.1em] mb-10 overflow-hidden max-w-xl">
-                {"Video  Editor  &  Visual  Architect.  Crafting  high-impact  cinematic  experiences  for  brands  that  demand  excellence.".split(' ').map((word, i) => (
-                  <motion.span
-                    key={i}
-                    initial={{ opacity: 0, y: 30, skewX: -10 }}
-                    animate={{ opacity: 1, y: 0, skewX: 0 }}
-                    whileHover={{ scale: 1.15, color: "var(--accent)", transition: { duration: 0.2 } }}
-                    transition={{
-                      duration: 0.8,
-                      delay: 0.6 + i * 0.04,
-                      ease: [0.22, 1, 0.36, 1]
-                    }}
-                    className="text-xl sm:text-2xl text-secondary inline-block cursor-default font-medium transition-colors duration-300"
-                  >
-                    {word}
-                  </motion.span>
-                ))}
+              <div className="mb-10 max-w-2xl">
+                <BlurText
+                  text="Video Editor & Visual Architect. Crafting high-impact cinematic experiences for brands that demand excellence."
+                  animateBy="words"
+                  direction="bottom"
+                  textAlign="left"
+                  delay={40}
+                  className="text-xl sm:text-2xl text-secondary font-medium leading-relaxed"
+                />
               </div>
 
               {/* Buttons with Magnetic-style spacing */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.7 }}
+                transition={{ duration: 0.8, delay: 1.2 }}
                 className="flex flex-wrap gap-5"
               >
                 <Link

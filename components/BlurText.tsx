@@ -26,11 +26,13 @@ interface BlurTextProps {
     easing?: (t: number) => number;
     onAnimationComplete?: () => void;
     stepDuration?: number;
+    textAlign?: 'left' | 'center' | 'right';
+    letterSpacing?: string;
 }
 
 const BlurText = ({
     text = '',
-    delay = 200,
+    delay = 50,
     className = '',
     animateBy = 'words',
     direction = 'top',
@@ -40,9 +42,17 @@ const BlurText = ({
     animationTo,
     easing = (t: number) => t,
     onAnimationComplete,
-    stepDuration = 0.35
+    stepDuration = 0.35,
+    textAlign = 'left',
+    letterSpacing = 'normal'
 }: BlurTextProps) => {
-    const elements = animateBy === 'words' ? text.split(' ') : text.split('');
+    const elements = useMemo(() => {
+        if (animateBy === 'words') {
+            return text.split(/\s+/).filter(Boolean);
+        }
+        return text.split('');
+    }, [text, animateBy]);
+
     const [inView, setInView] = useState(false);
     const ref = useRef<HTMLParagraphElement>(null);
 
@@ -64,16 +74,16 @@ const BlurText = ({
 
     const defaultFrom = useMemo(
         () =>
-            direction === 'top' ? { filter: 'blur(10px)', opacity: 0, y: -50 } : { filter: 'blur(10px)', opacity: 0, y: 50 },
+            direction === 'top' ? { filter: 'blur(10px)', opacity: 0, y: -20 } : { filter: 'blur(10px)', opacity: 0, y: 20 },
         [direction]
     );
 
     const defaultTo = useMemo(
         () => [
             {
-                filter: 'blur(5px)',
+                filter: 'blur(4px)',
                 opacity: 0.5,
-                y: direction === 'top' ? 5 : -5
+                y: direction === 'top' ? 2 : -2
             },
             { filter: 'blur(0px)', opacity: 1, y: 0 }
         ],
@@ -88,7 +98,15 @@ const BlurText = ({
     const times = Array.from({ length: stepCount }, (_, i) => (stepCount === 1 ? 0 : i / (stepCount - 1)));
 
     return (
-        <p ref={ref} className={className} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <p
+            ref={ref}
+            className={className}
+            style={{
+                textAlign,
+                lineHeight: '1.5',
+                display: 'block'
+            }}
+        >
             {elements.map((segment, index) => {
                 const animateKeyframes = buildKeyframes(fromSnapshot, toSnapshots);
 
@@ -107,9 +125,15 @@ const BlurText = ({
                         animate={inView ? animateKeyframes : fromSnapshot}
                         transition={spanTransition}
                         onAnimationComplete={index === elements.length - 1 ? onAnimationComplete : undefined}
+                        style={{
+                            whiteSpace: 'pre',
+                            marginRight: animateBy === 'words'
+                                ? (index < elements.length - 1 ? '0.3em' : '0')
+                                : (segment === ' ' ? '0.2em' : letterSpacing)
+                        }}
                     >
-                        {segment === ' ' ? '\u00A0' : segment}
-                        {animateBy === 'words' && index < elements.length - 1 && '\u00A0'}
+                        {segment}
+                        {animateBy === 'letters' && segment === ' ' && '\u00A0'}
                     </motion.span>
                 );
             })}

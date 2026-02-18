@@ -36,7 +36,9 @@ export function WelcomeIntro() {
                             delay={100}
                             animateBy="letters"
                             direction="top"
-                            className="text-white text-xl sm:text-3xl font-black tracking-[0.8em] uppercase text-center pl-[0.8em]"
+                            textAlign="center"
+                            letterSpacing="0.8em"
+                            className="text-white text-xl sm:text-3xl font-black uppercase text-center pl-[0.5em]"
                         />
                     </div>
 
@@ -45,6 +47,7 @@ export function WelcomeIntro() {
                         delay={50}
                         animateBy="words"
                         direction="bottom"
+                        textAlign="center"
                         className="text-white/60 text-sm sm:text-base font-medium max-w-sm text-center mb-4 leading-relaxed tracking-wide"
                     />
 
