@@ -1,7 +1,8 @@
 'use client'
 
+import { MotionWrapper } from '@/components/ui/MotionWrapper'
 import Image from 'next/image'
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 
 export function BeforeAfterSlider({
   beforeSrc,
@@ -15,56 +16,68 @@ export function BeforeAfterSlider({
   const containerRef = useRef<HTMLDivElement>(null)
   const [percent, setPercent] = useState(50)
 
+  // Mouse move handler
   function onMove(e: React.MouseEvent | React.TouchEvent) {
     const rect = containerRef.current?.getBoundingClientRect()
-    let x = 0
+    if (!rect) return
+
+    let clientX = 0
     if ('touches' in e && e.touches[0]) {
-      x = e.touches[0].clientX
+      clientX = e.touches[0].clientX
     } else if ('clientX' in e) {
-      x = e.clientX
+      clientX = (e as React.MouseEvent).clientX
     }
-    if (rect) {
-      const p = Math.min(100, Math.max(0, ((x - rect.left) / rect.width) * 100))
-      setPercent(p)
-    }
+
+    const x = Math.max(0, Math.min(clientX - rect.left, rect.width))
+    const p = (x / rect.width) * 100
+    setPercent(p)
   }
 
   return (
-    <div
-      ref={containerRef}
-      className="relative w-full overflow-hidden rounded-xl border border-white/10 bg-black"
-      onMouseMove={onMove}
-      onTouchMove={onMove}
-    >
-      <Image
-        src={beforeSrc}
-        alt={alt ?? ''}
-        width={1200}
-        height={800}
-        sizes="100vw"
-        className="pointer-events-none select-none w-full h-auto object-cover"
-      />
+    <MotionWrapper>
       <div
-        className="absolute inset-0"
-        style={{ clipPath: `inset(0 ${100 - percent}% 0 0)` }}
+        ref={containerRef}
+        className="relative w-full aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-black cursor-col-resize group shadow-2xl"
+        onMouseMove={onMove}
+        onTouchMove={onMove}
       >
-        <Image
-          src={afterSrc}
-          alt={alt ?? ''}
-          fill
-          sizes="100vw"
-          className="pointer-events-none select-none object-cover"
-        />
-      </div>
-      <div
-        className="absolute top-0 bottom-0"
-        style={{ left: `${percent}%` }}
-      >
-        <div className="h-full w-[2px] bg-accent shadow-glow" />
-        <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 bg-accent text-black px-3 py-1 rounded-full text-xs">
-          Slide
+        {/* Images */}
+        <div className="absolute inset-0 select-none pointer-events-none">
+          <Image
+            src={beforeSrc}
+            alt={alt || "Before"}
+            fill
+            className="object-cover"
+          />
+          <div className="absolute top-4 left-4 bg-black/50 backdrop-blur px-3 py-1 rounded-full text-xs font-medium text-white/80 border border-white/10">Before</div>
+        </div>
+
+        <div
+          className="absolute inset-0 select-none pointer-events-none"
+          style={{ clipPath: `inset(0 ${100 - percent}% 0 0)` }}
+        >
+          <Image
+            src={afterSrc}
+            alt={alt || "After"}
+            fill
+            className="object-cover"
+          />
+          <div className="absolute top-4 right-4 bg-accent/80 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-black border border-accent">After</div>
+        </div>
+
+        {/* Divider Line */}
+        <div
+          className="absolute top-0 bottom-0 w-1 bg-accent z-20 shadow-[0_0_20px_rgba(212,175,55,0.8)]"
+          style={{ left: `${percent}%` }}
+        >
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-accent flex items-center justify-center shadow-lg">
+            <div className="flex gap-1">
+              <div className="w-0 h-0 border-t-[4px] border-t-transparent border-r-[6px] border-r-black border-b-[4px] border-b-transparent" />
+              <div className="w-0 h-0 border-t-[4px] border-t-transparent border-l-[6px] border-l-black border-b-[4px] border-b-transparent" />
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </MotionWrapper>
   )
 }

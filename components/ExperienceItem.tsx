@@ -1,3 +1,7 @@
+'use client'
+
+import { MotionWrapper } from '@/components/ui/MotionWrapper'
+
 export function ExperienceItem({
   company,
   duration,
@@ -8,19 +12,24 @@ export function ExperienceItem({
   details: string[]
 }) {
   return (
-    <div className="card p-6">
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold">{company}</h3>
-        <span className="text-sm text-white/60">{duration}</span>
+    <MotionWrapper>
+      <div className="relative pl-8 border-l-2 border-primary/10 hover:border-primary transition-colors duration-300">
+        <div className="absolute top-0 left-[-5px] w-2.5 h-2.5 rounded-full bg-primary ring-4 ring-white" />
+
+        <div className="mb-6">
+          <h3 className="text-3xl sm:text-4xl font-black text-primary mb-2 tracking-tight">{company}</h3>
+          <p className="text-accent font-bold text-lg mb-6 bg-accent/5 inline-block px-4 py-1.5 rounded-full border border-accent/10">{duration}</p>
+
+          <ul className="space-y-4">
+            {details.map((item, i) => (
+              <li key={i} className="text-xl font-medium text-foreground leading-snug flex items-center gap-4 group">
+                <span className="w-2 h-2 rounded-full bg-accent group-hover:scale-150 transition-transform duration-300 shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-      <ul className="mt-4 grid gap-2 text-white/80 text-sm">
-        {details.map((d) => (
-          <li key={d} className="flex items-center gap-2">
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
-            {d}
-          </li>
-        ))}
-      </ul>
-    </div>
+    </MotionWrapper>
   )
 }

@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 
-export function ProfilePhoto({ src = '/profile.jpg' }: { src?: string }) {
+export function ProfilePhoto({ src = '/mohanraj.png' }: { src?: string }) {
   return (
     <motion.div
       className="relative w-40 h-40 sm:w-52 sm:h-52 lg:w-64 lg:h-64"
@@ -19,7 +19,7 @@ export function ProfilePhoto({ src = '/profile.jpg' }: { src?: string }) {
           width={512}
           height={512}
           priority
-          className="object-cover w-full h-full"
+          className="object-cover object-[center_25%] scale-[1.0] hover:scale-[1.05] transition-transform duration-500 w-full h-full"
         />
       </div>
     </motion.div>

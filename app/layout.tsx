@@ -1,9 +1,9 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { siteConfig } from '@/lib/siteConfig'
-import { Inter } from 'next/font/google'
+import { Outfit } from 'next/font/google'
 
-const font = Inter({ subsets: ['latin'] })
+const font = Outfit({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
@@ -22,9 +22,6 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: ['/og-image.png']
   },
-  icons: {
-    icon: '/favicon.ico'
-  }
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
