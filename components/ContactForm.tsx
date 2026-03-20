@@ -5,27 +5,48 @@ import { useState } from 'react'
 
 export function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState<string>('')
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const form = e.currentTarget
     const formData = new FormData(form)
     setStatus('sending')
+    setErrorMessage('')
+
+    const payload = {
+      name:    formData.get('name')    as string,
+      email:   formData.get('email')   as string,
+      subject: formData.get('subject') as string,
+      message: formData.get('message') as string,
+    }
+
     try {
-      const res = await fetch('/api/contact', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
-        body: JSON.stringify(Object.fromEntries(formData.entries())),
-        headers: { 'Content-Type': 'application/json' }
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
       })
-      if (!res.ok) throw new Error('Request failed')
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message.')
+      }
+
       setStatus('sent')
       form.reset()
-    } catch {
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Something went wrong.'
+      setErrorMessage(message)
       setStatus('error')
     }
   }
 
-  const inputClasses = "w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all duration-200 bg-white text-foreground placeholder:text-gray-400"
+  const inputClasses =
+    'w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all duration-200 bg-white text-foreground placeholder:text-gray-400'
 
   return (
     <motion.form
@@ -99,17 +120,19 @@ export function ContactForm() {
         </div>
 
         {status === 'sent' && (
-          <div className="p-4 rounded-lg bg-emerald-50 text-emerald-600 text-sm font-medium">
-            Message sent successfully!
+          <div className="p-4 rounded-lg bg-emerald-50 text-emerald-700 text-sm font-medium flex items-center gap-2">
+            ✅ Your message was sent successfully! I&apos;ll get back to you soon.
           </div>
         )}
 
         {status === 'error' && (
-          <div className="p-4 rounded-lg bg-red-50 text-red-600 text-sm font-medium">
-            Something went wrong. Please try again.
+          <div className="p-4 rounded-lg bg-red-50 text-red-600 text-sm font-medium flex items-start gap-2">
+            <span>⚠️</span>
+            <span>{errorMessage || 'Something went wrong. Please try again.'}</span>
           </div>
         )}
       </div>
     </motion.form>
   )
 }
+
