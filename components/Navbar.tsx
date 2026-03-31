@@ -25,7 +25,7 @@ export function Navbar() {
     }
   }, [isMobileMenuOpen])
 
-  const navItems = ['About', 'Skills', 'Packages', 'Benefits', 'Experience', 'Projects']
+  const navItems = ['About', 'Skills', 'Benefits', 'Experience', 'Projects']
 
   return (
     <motion.header

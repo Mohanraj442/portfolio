@@ -12,7 +12,7 @@ export function CTAButtons() {
         whileTap={{ scale: 0.95 }}
       >
         <Link
-          href="#packages"
+          href="#projects"
           className="group relative px-10 py-4 rounded-full font-black text-[10px] uppercase tracking-[0.3em] overflow-hidden inline-flex items-center gap-3 bg-primary text-white shadow-2xl shadow-primary/20 hover:bg-accent transition-all duration-500"
         >
           <span>Explore Works</span>
